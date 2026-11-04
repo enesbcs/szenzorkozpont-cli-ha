@@ -1,0 +1,92 @@
+{
+ "config": {
+  "step": {
+   "user": {
+    "title": "SzenzorKozpont",
+    "description": "Cél felhő kiválasztása + kapcsolat beállítása. A SzenzorKozpont a saját felhő (teljes funkcionalitás: konfiguráció, OTA, kvóta), a ThingsBoard csak telemetria-tükrözést biztosít. A hitelesítő egyetlen közös mezőben utazik (API-kulcs / token, a választott felhőhöz) — ThingsBoardhoz az ESZKÖZ access token kell (Devices → Credentials), nem a felhasználói API-kulcs.",
+    "data": {
+     "backend": "Cél felhő",
+     "server_url": "Szerver URL (porttal együtt)",
+     "api_key": "API-kulcs / token (a választott felhőhöz)",
+     "poll_day_s": "Nappali polling (mp, 06:00–21:00)",
+     "poll_night_s": "Éjszakai polling (mp)"
+    }
+   }
+  },
+  "error": {
+   "invalid_url": "Csak https:// kezdetű URL fogadható el (ThingsBoard-hálózatban http:// is megengedett).",
+   "invalid_key": "Hibás API-kulcs formátum (szk_… alak kell).",
+   "missing_key": "Hitelesítő megadása kötelező (API-kulcs / token).",
+   "cannot_connect": "Nem érhető el a szerver (timeout / hálózat).",
+   "auth_failed": "A szerver elutasította a kulcsot/token-t.",
+   "tb_user_key": "Ez ThingsBoard FELHASZNÁLÓI API-kulcsnak tűnik (tb_… kezdet); az ESZKÖZ access token kell helyette (ThingsBoard → Devices → eszköz → Credentials).",
+   "unknown": "Váratlan hiba, nézd meg a naplót."
+  },
+  "abort": {
+   "already_configured": "Ez a szerver már fel van véve."
+  }
+ },
+ "options": {
+  "step": {
+   "init": {
+    "title": "SzenzorKozpont beállítások",
+    "description": "Polling- és riport-beállítások (a változás-alapú riport és az OTA kizárólag a SzenzorKozpont felhőhöz tartozik).",
+    "data": {
+     "poll_day_s": "Nappali polling (mp, 06:00–21:00)",
+     "poll_night_s": "Éjszakai polling (mp)",
+     "change_only": "Változás-alapú riport (csak SzenzorKozpont)",
+     "allow_ota_on_metered": "OTA mobilkapcsolaton is (csak SzenzorKozpont)",
+     "auto_update": "Automatikus OTA (csak SzenzorKozpont)",
+     "ota_channel": "OTA-csatorna (csak SzenzorKozpont)",
+     "tb_chunking": "Riport darabolása és várakozás darabok küldése között",
+     "verify_ssl": "SSL-tanúsítvány ellenőrzése",
+     "debug": "Bővített naplózás"
+    }
+   }
+  }
+ },
+ "entity": {
+  "button": {
+   "sync_now": {
+    "name": "Azonnali szinkron",
+    "description": "Kényszerített ciklus most, teljes riporttal."
+   },
+   "ota_update_now": {
+    "name": "Azonnali OTA-frissítés",
+    "description": "Verzió-ellenőrzés most és telepítés, az automatikus frissítés korlátai nélkül."
+   }
+  },
+  "sensor": {
+   "last_report": {
+    "name": "Utolsó riport"
+   },
+   "next_poll": {
+    "name": "Következő polling"
+   },
+   "drift": {
+    "name": "Szerver-óraeltolódás"
+   },
+   "sent": {
+    "name": "Utoljára küldött mérések"
+   }
+  }
+ },
+ "issues": {
+  "bad_key": {
+   "title": "SzenzorKozpont: hibás API-kulcs",
+   "description": "A szerver visszautasította a konfigurációban megadott API-kulcsot. Ellenőrizd a kliens beállításait."
+  },
+  "server_unreachable": {
+   "title": "SzenzorKozpont: szerver nem érhető el",
+   "description": "Több egymás követő ciklusban nem sikerült kapcsolódni a szerverhez. A kliens exponenciálisan növekvő várakozással próbálkozik."
+  },
+  "restart_required": {
+   "title": "SzenzorKozpont: újraindítás szükséges",
+   "description": "Az OTA-frissítés telepítve van, de a Home Assistant újraindítása szükséges az aktiválásához."
+  },
+  "update_rollback": {
+   "title": "SzenzorKozpont: frissítés visszavonása",
+   "description": "Az utolsó óta történt frissítés után ismétlődő hibák jelentkeztek. A régi verzió visszaállítása javasolt."
+  }
+ }
+}

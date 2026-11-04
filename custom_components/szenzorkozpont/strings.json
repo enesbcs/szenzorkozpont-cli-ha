@@ -1,0 +1,92 @@
+{
+ "config": {
+  "step": {
+   "user": {
+    "title": "SzenzorKozpont",
+    "description": "Target cloud + connection setup. SzenzorKozpont is the native cloud (full features: config, OTA, quota); ThingsBoard mirrors telemetry only. One credential field (API key / token) is used for the selected cloud — for ThingsBoard the DEVICE access token (Devices → Credentials), not the user API key.",
+    "data": {
+     "backend": "Target cloud",
+     "server_url": "Server URL (with port)",
+     "api_key": "API key / token (for the selected cloud)",
+     "poll_day_s": "Daytime polling (s, 06:00–21:00)",
+     "poll_night_s": "Nighttime polling (s)"
+    }
+   }
+  },
+  "error": {
+   "invalid_url": "Only https:// URLs are accepted (http:// is allowed on ThingsBoard networks).",
+   "invalid_key": "Invalid API key format.",
+   "missing_key": "Credential is required (API key / token).",
+   "cannot_connect": "Server is unreachable.",
+   "auth_failed": "The server rejected the key/token.",
+   "tb_user_key": "This looks like a ThingsBoard USER API key (tb_…); a device access token is required instead (ThingsBoard → Devices → device → Credentials).",
+   "unknown": "Unexpected error."
+  },
+  "abort": {
+   "already_configured": "This server is already added."
+  }
+ },
+ "options": {
+  "step": {
+   "init": {
+    "title": "SzenzorKozpont settings",
+    "description": "Polling, report and OTA settings (OTA belongs to the SzenzorKozpont cloud).",
+    "data": {
+     "poll_day_s": "Daytime polling (s, 06:00–21:00)",
+     "poll_night_s": "Nighttime polling (s)",
+     "change_only": "Change-based reporting (SzenzorKozpont only)",
+     "allow_ota_on_metered": "OTA over metered connection (SzenzorKozpont only)",
+     "auto_update": "Automatic OTA (SzenzorKozpont only)",
+     "ota_channel": "OTA channel (SzenzorKozpont only)",
+     "tb_chunking": "Chunk report and pace chunked requests",
+     "verify_ssl": "Verify SSL certificate",
+     "debug": "Extended logging"
+    }
+   }
+  }
+ },
+ "entity": {
+  "button": {
+   "sync_now": {
+    "name": "Sync now",
+    "description": "Forced cycle now, with full report."
+   },
+   "ota_update_now": {
+    "name": "OTA update now",
+    "description": "Check version now and install, bypassing auto-update limits."
+   }
+  },
+  "sensor": {
+   "last_report": {
+    "name": "Last report"
+   },
+   "next_poll": {
+    "name": "Next polling"
+   },
+   "drift": {
+    "name": "Server clock drift"
+   },
+   "sent": {
+    "name": "Last sent measurements"
+   }
+  }
+ },
+ "issues": {
+  "bad_key": {
+   "title": "SzenzorKozpont: invalid API key",
+   "description": "The server rejected the API key in the configuration. Check the client settings."
+  },
+  "server_unreachable": {
+   "title": "SzenzorKozpont: server unreachable",
+   "description": "Could not connect to the server in several consecutive cycles. The client retries with exponential backoff."
+  },
+  "restart_required": {
+   "title": "SzenzorKozpont: restart required",
+   "description": "The OTA update is installed, but Home Assistant must be restarted to activate it."
+  },
+  "update_rollback": {
+   "title": "SzenzorKozpont: update rollback",
+   "description": "Repeated errors occurred after the last update. Restoring the previous version is recommended."
+  }
+ }
+}

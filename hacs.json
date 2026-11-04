@@ -1,0 +1,7 @@
+{
+  "name": "SzenzorKozpont",
+  "content_in_root": false,
+  "filename": "szenzorkozpont.zip",
+  "render_readme": true,
+  "homeassistant": "2024.2.0"
+}

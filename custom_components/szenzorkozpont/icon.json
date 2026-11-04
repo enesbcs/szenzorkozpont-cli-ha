@@ -1,0 +1,18 @@
+{
+  "entity": {
+    "sensor": {
+      "last_report": {
+        "default": "mdi:cloud-upload"
+      },
+      "next_poll": {
+        "default": "mdi:timer-outline"
+      },
+      "drift": {
+        "default": "mdi:clock-outline"
+      },
+      "sent": {
+        "default": "mdi:chart-line"
+      }
+    }
+  }
+}
