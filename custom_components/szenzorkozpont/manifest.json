@@ -1,7 +1,7 @@
 {
   "domain": "szenzorkozpont",
   "name": "SzenzorKozpont",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "documentation": "https://github.com/enesbcs/szenzorkozpont-cli-ha",
   "issue_tracker": "https://github.com/enesbcs/szenzorkozpont-cli-ha/issues",
   "dependencies": [],
