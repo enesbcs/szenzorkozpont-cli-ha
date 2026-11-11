@@ -340,17 +340,43 @@ class SzkCoordinator(DataUpdateCoordinator[dict]):
             pass
         dev_names: dict[str, str] = {}
         try:
-            # Device-registry mapping API deprecated (gone in 2027.9):
-            # ITERATE `devices` view, it yields entries themselves
-            # (.items() already warns). Entity-/area-registry
-            # are plain mappings (unaffected).
-            for dev in dev_reg.devices:
+            # A device registry `devices` attribútuma HA-verziótól függően
+            # lehet mapping (dict) vagy nézet (iterálható DeviceEntry-k).
+            # Mindkét alakot kezeljük, hogy a csoportazonosítók/ nevek
+            # minden verzióban feloldódjanak.
+            dev_collection = dev_reg.devices
+            if isinstance(dev_collection, dict):
+                dev_iter = dev_collection.values()
+            elif hasattr(dev_collection, "values") and callable(
+                getattr(dev_collection, "values", None)
+            ):
+                try:
+                    dev_iter = dev_collection.values()
+                except Exception:
+                    dev_iter = dev_collection
+            else:
+                dev_iter = dev_collection
+            for dev in dev_iter:
+                if isinstance(dev, str):
+                    if isinstance(dev_collection, dict):
+                        dev = dev_collection.get(dev)
+                    if dev is None:
+                        continue
                 did = getattr(dev, "id", None)
+                if did is None and isinstance(dev, dict):
+                    did = dev.get("id")
                 if did is None:
                     continue
-                if getattr(dev, "name", None):
-                    dev_names[did] = dev.name
-        except AttributeError:
+                name = getattr(dev, "name", None)
+                if not name and isinstance(dev, dict):
+                    name = dev.get("name")
+                if not name:
+                    name = getattr(dev, "name_by_user", None)
+                if not name and isinstance(dev, dict):
+                    name = dev.get("name_by_user")
+                if name:
+                    dev_names[did] = name
+        except Exception:
             pass
         area_names: dict[str, str] = {}
         try:
